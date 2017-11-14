@@ -16,5 +16,8 @@ server <- function(input, output) {
          xlab = "Waiting time to next eruption (in mins)",
          main = "Histogram of waiting times")
     })
+  output$set_date <- renderText({
+      paste("Date you set: ", input$date) 
+  })
 }
 #+END_SRC
