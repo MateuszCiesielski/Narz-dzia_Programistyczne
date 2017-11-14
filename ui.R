@@ -4,7 +4,9 @@ ui <- fluidPage(theme=shinytheme("superhero"),
   # App title ----
   titlePanel("Nice app!"),
   h4("Welcome in our app!", style = "font-family:'times';color:grey;"),
-  
+  img(src="image.png"),
+  h5("Some widgets:", style ="color:grey"),
+  h5("Histogram:", style = "color:grey"),
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
     # Sidebar panel for inputs ----
