@@ -16,7 +16,10 @@ server <- function(input, output) {
          xlab = "Waiting time to next eruption (in mins)",
          main = "Histogram of waiting times")
     })
-  output$set_date <- renderText({
+  output&set_Name <- renderText({
+    paste("Hello ", input&name)
+  })
+  output$set_Date <- renderText({
       paste("Date you set: ", input$date) 
   })
 }

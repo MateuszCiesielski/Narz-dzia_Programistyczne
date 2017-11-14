@@ -10,6 +10,11 @@ ui <- fluidPage(theme=shinytheme("superhero"),
   sidebarLayout(
     # Sidebar panel for inputs ----
     sidebarPanel(
+      textInput("name",
+                label = "Who are you?: "
+                ),
+      actionButton("set",
+                   label = "Submit"),
       dateInput("date",
                 label = "Set a date:"
                 ),
@@ -23,7 +28,8 @@ ui <- fluidPage(theme=shinytheme("superhero"),
     
     # Main panel for displaying outputs ----
     mainPanel(
-      textOutput("set_date"),
+      textOutput("set_Name"),
+      textOutput("set_Date"),
       # Output: Histogram ----
       plotOutput(outputId = "distPlot")
     )
