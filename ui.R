@@ -2,7 +2,8 @@ library(shinythemes)
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(theme=shinytheme("superhero"),
   # App title ----
-  titlePanel("Hello Shiny!"),
+  titlePanel("Nice app!"),
+  h4("Welcome in our app!", style = "font-family:'times';color:grey;"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
