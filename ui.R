@@ -11,6 +11,9 @@ ui <- fluidPage(theme=shinytheme("superhero"),
   sidebarLayout(
     # Sidebar panel for inputs ----
     sidebarPanel(
+      dateInput("date",
+                label = "Set a date:"
+                ),
       # Input: Slider for the number of bins ----
       sliderInput(inputId = "bins",
                   label = "Number of bins:",
