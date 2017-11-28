@@ -13,8 +13,6 @@ ui <- fluidPage(theme=shinytheme("superhero"),
       textInput("name",
                 label = "Who are you?: "
                 ),
-      actionButton("set",
-                   label = "Submit"),
       dateInput("date",
                 label = "Set a date:"
                 ),
