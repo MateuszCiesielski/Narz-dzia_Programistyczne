@@ -16,6 +16,11 @@ server <- function(input, output) {
          xlab = "Waiting time to next eruption (in mins)",
          main = "Histogram of waiting times")
     })
+  output$distTable <- renderTable({
+    bordered = TRUE
+    rownames = c("1", "2", "3")
+    colnames = c("a", "b", "c")
+  })
   output$set_Name <- renderText({
     paste("Hello ", input$name)
   })

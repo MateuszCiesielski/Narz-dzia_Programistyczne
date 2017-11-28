@@ -29,7 +29,8 @@ ui <- fluidPage(theme=shinytheme("superhero"),
       textOutput("set_Name"),
       textOutput("set_Date"),
       # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
+      plotOutput(outputId = "distPlot"),
+      tableOutput(outputId = "distTable")
     )
   )
 )
