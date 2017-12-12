@@ -1,37 +1,62 @@
-library(shinythemes)
-# Define UI for app that draws a histogram ----
-ui <- fluidPage(theme=shinytheme("superhero"),
+library(shiny)
+
+# Define UI for data upload app ----
+ui <- fluidPage(
+  
   # App title ----
-  titlePanel("Nice app!"),
-  h4("Welcome in our app!", style = "font-family:'times';color:grey;"),
-  img(src="image.png"),
-  h5("Histogram:", style = "color:grey"),
+  titlePanel("Uploading Files"),
+  
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
+    
     # Sidebar panel for inputs ----
     sidebarPanel(
-      textInput("name",
-                label = "Who are you?: "
-                ),
-      dateInput("date",
-                label = "Set a date:"
-                ),
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      
+      # Input: Select a file ----
+      fileInput("file1", "Choose CSV File",
+                multiple = TRUE,
+                accept = c("text/csv",
+                           "text/comma-separated-values,text/plain",
+                           ".csv")),
+      
+      # Horizontal line ----
+      tags$hr(),
+      
+      # Input: Checkbox if file has header ----
+      checkboxInput("header", "Header", TRUE),
+      
+      # Input: Select separator ----
+      radioButtons("sep", "Separator",
+                   choices = c(Comma = ",",
+                               Semicolon = ";",
+                               Tab = "\t"),
+                   selected = ","),
+      
+      # Input: Select quotes ----
+      radioButtons("quote", "Quote",
+                   choices = c(None = "",
+                               "Double Quote" = '"',
+                               "Single Quote" = "'"),
+                   selected = '"'),
+      
+      # Horizontal line ----
+      tags$hr(),
+      
+      # Input: Select number of rows to display ----
+      radioButtons("disp", "Display",
+                   choices = c(Head = "head",
+                               All = "all"),
+                   selected = "head")
+      
     ),
     
     # Main panel for displaying outputs ----
     mainPanel(
-      textOutput("set_Name"),
-      textOutput("set_Date"),
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot"),
-      tableOutput(outputId = "distTable")
+      
+      # Output: Data file ----
+      tableOutput("contents")
+      
     )
+    
   )
 )
-#+END_SRC

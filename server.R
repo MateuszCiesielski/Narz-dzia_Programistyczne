@@ -1,31 +1,26 @@
+# Define server logic to read selected file ----
 server <- function(input, output) {
-
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
-  output$distPlot <- renderPlot({
-    x    <- faithful$eruptions
-    #x    <- rnorm(1000)
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    hist(x, breaks = bins, col = "#75AADB", border = "white",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
-    })
-  output$distTable <- renderTable({
-    bordered = TRUE
-    rownames = c("1", "2", "3")
-    colnames = c("a", "b", "c")
+  
+  output$contents <- renderTable({
+    
+    # input$file1 will be NULL initially. After the user selects
+    # and uploads a file, head of that data file by default,
+    # or all rows if selected, will be shown.
+    
+    req(input$file1)
+    
+    df <- read.csv(input$file1$datapath,
+                   header = input$header,
+                   sep = input$sep,
+                   quote = input$quote)
+    
+    if(input$disp == "head") {
+      return(head(df))
+    }
+    else {
+      return(df)
+    }
+    
   })
-  output$set_Name <- renderText({
-    paste("Hello ", input$name)
-  })
-  output$set_Date <- renderText({
-      paste("Date you set: ", input$date) 
-  })
+  
 }
-#+END_SRC
