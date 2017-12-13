@@ -9,15 +9,17 @@ function(input, output) {
   print(is.data.frame(data))
   print(ncol(data))
   print(nrow(data))
- # print(data$V1)
-  str(data)
-  
+  df = head(data[order(data$Bezrobotni.dlugotrwale.na.koniec.okresu, decreasing= T),], n = 5)
+  # df <- head(sort(data$Bezrobotni.dlugotrwale.na.koniec.okresu,decreasing=TRUE),n=5)
+  print(df)
+ # str(data)
+
   # Fill in the spot we created for a plot
   output$phonePlot <- renderPlot({
     
     # Render a barplot
-    H <- data$Kod
-    M <- data$Elementarne.grupy.zawodow
+    H <- df$Bezrobotni.dlugotrwale.na.koniec.okresu
+    M <- df$Elementarne.grupy.zawodow
     
     # Give the chart file a name.
     
