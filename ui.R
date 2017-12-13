@@ -1,61 +1,27 @@
-library(shiny)
+# Rely on the 'WorldPhones' dataset in the datasets
+# package (which generally comes preloaded).
+library(datasets)
 
-# Define UI for data upload app ----
-ui <- fluidPage(
+# Use a fluid Bootstrap layout
+fluidPage(    
   
-  # App title ----
-  titlePanel("Uploading Files"),
+  # Give the page a title
+  titlePanel("Telephones by region"),
   
-  # Sidebar layout with input and output definitions ----
-  sidebarLayout(
+  # Generate a row with a sidebar
+  sidebarLayout(      
     
-    # Sidebar panel for inputs ----
+    # Define the sidebar with one input
     sidebarPanel(
-      
-      # Input: Select a file ----
-      fileInput("file1", "Choose CSV File",
-                multiple = TRUE,
-                accept = c("text/csv",
-                           "text/comma-separated-values,text/plain",
-                           ".csv")),
-      
-      # Horizontal line ----
-      tags$hr(),
-      
-      # Input: Checkbox if file has header ----
-      checkboxInput("header", "Header", TRUE),
-      
-      # Input: Select separator ----
-      radioButtons("sep", "Separator",
-                   choices = c(Comma = ",",
-                               Semicolon = ";",
-                               Tab = "\t"),
-                   selected = ","),
-      
-      # Input: Select quotes ----
-      radioButtons("quote", "Quote",
-                   choices = c(None = "",
-                               "Double Quote" = '"',
-                               "Single Quote" = "'"),
-                   selected = '"'),
-      
-      # Horizontal line ----
-      tags$hr(),
-      
-      # Input: Select number of rows to display ----
-      radioButtons("disp", "Display",
-                   choices = c(Head = "head",
-                               All = "all"),
-                   selected = "head")
-      
+    # selectInput("region", "Region:", 
+     #             choices=colnames(WorldPhones)),
+      hr(),
+      helpText("Data from AT&T (1961) The World's Telephones.")
     ),
     
-    # Main panel for displaying outputs ----
+    # Create a spot for the barplot
     mainPanel(
-      
-      # Output: Data file ----
-      tableOutput("contents")
-      
+      plotOutput("phonePlot")  
     )
     
   )

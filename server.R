@@ -1,26 +1,29 @@
-# Define server logic to read selected file ----
-server <- function(input, output) {
+# Rely on the 'WorldPhones' dataset in the datasets
+# package (which generally comes preloaded).
+library(datasets)
+
+# Define a server for the Shiny app
+function(input, output) {
   
-  output$contents <- renderTable({
+  data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";")
+  print(is.data.frame(data))
+  print(ncol(data))
+  print(nrow(data))
+ # print(data$V1)
+  str(data)
+  
+  # Fill in the spot we created for a plot
+  output$phonePlot <- renderPlot({
     
-    # input$file1 will be NULL initially. After the user selects
-    # and uploads a file, head of that data file by default,
-    # or all rows if selected, will be shown.
+    # Render a barplot
+    H <- data$Kod
+    M <- data$Elementarne.grupy.zawodow
     
-    req(input$file1)
+    # Give the chart file a name.
     
-    df <- read.csv(input$file1$datapath,
-                   header = input$header,
-                   sep = input$sep,
-                   quote = input$quote)
-    
-    if(input$disp == "head") {
-      return(head(df))
-    }
-    else {
-      return(df)
-    }
+    # Plot the bar chart.
+    barplot(H,names.arg = M,xlab = "Month",ylab = "Revenue",col = "blue",
+            main = "Revenue chart",border = "red")
     
   })
-  
 }
