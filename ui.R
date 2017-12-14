@@ -1,17 +1,15 @@
-# Rely on the 'WorldPhones' dataset in the datasets
-# package (which generally comes preloaded).
-library(datasets)
+
 data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
 NazwyKolumn=colnames(data)
 # Use a fluid Bootstrap layout
-fluidPage(    
+fluidPage(
+ # dashboardSiderbar(),
   
   # Give the page a title
   titlePanel("Costam costam praca i bezrobocie"),
   
   # Generate a row with a sidebar
   sidebarLayout(      
-    
     # Define the sidebar with one input
     sidebarPanel(
       
@@ -34,16 +32,14 @@ fluidPage(
                     value=5)
       ),
       helpText("Wybierz zawody dla ktorych chcesz wyswietlic stan"),
-      scrollbox(
-        
+      selectizeInput(
+        'WybraneZawody', '2. Multi-select', choices = data$Elementarne.grupy.zawodów, multiple = TRUE
       )
-      
       
     ),
     # Create a spot for the barplot
     mainPanel(
       plotOutput("PracaPlot")  
     )
-    
   )
 )
