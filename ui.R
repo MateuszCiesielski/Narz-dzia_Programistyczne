@@ -1,7 +1,7 @@
 # Rely on the 'WorldPhones' dataset in the datasets
 # package (which generally comes preloaded).
 library(datasets)
-data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";")
+data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
 NazwyKolumn=colnames(data)
 # Use a fluid Bootstrap layout
 fluidPage(    

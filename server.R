@@ -4,7 +4,7 @@ library(datasets)
 # Define a server for the Shiny app
 function(input, output) {
   
-  data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";")
+  data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
   print(is.data.frame(data))
   print(ncol(data))
   print(nrow(data))
