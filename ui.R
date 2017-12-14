@@ -7,7 +7,7 @@ NazwyKolumn=colnames(data)
 fluidPage(    
   
   # Give the page a title
-  titlePanel("Telephones by region"),
+  titlePanel("Costam costam praca i bezrobocie"),
   
   # Generate a row with a sidebar
   sidebarLayout(      
@@ -22,14 +22,24 @@ fluidPage(
       ##lub innej funkcji reagujacej dynamicznie na zmiany(???)
       selectInput("Kolumna","Inp:",
                   choices=NazwyKolumn),
-      hr(), ####co to kuhwa to hr
-      helpText("Wybierz zawody dla ktorych chcesz wyswietlic stan"),
+      hr(),##to tylko linia pozioma miedzy inputami
       #Selektuje ile wyswietlic top zawodow
       ##Potem beda tryby, top N bezrobotnych lub wybrane zawody
-      sliderInput("IloscZawodow","Wyswietl top N:",
-                  min = 0, max = 10,
-                  value=5)),
-    
+      helpText("Czy wyswietlic top N zawodow w danej kategorii?"),
+      checkboxInput("CzyPokazacTopN", "Wyswietl"),
+      conditionalPanel(
+        condition="input.CzyPokazacTopN == true",
+        sliderInput("IloscZawodow","Wyswietl top N:",
+                    min = 0, max = 10,
+                    value=5)
+      ),
+      helpText("Wybierz zawody dla ktorych chcesz wyswietlic stan"),
+      scrollbox(
+        
+      )
+      
+      
+    ),
     # Create a spot for the barplot
     mainPanel(
       plotOutput("PracaPlot")  

@@ -5,12 +5,7 @@ library(datasets)
 function(input, output) {
   
   data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
-  print(is.data.frame(data))
-  print(ncol(data))
-  print(nrow(data))
-  ########## Sortuje calego data frame'a i wyciagam top 5 bezrobotnych zawodow, much wow###############
 
- # str(data)
   #####Tutaj ustawiaj zmienne dla wykresu
   ######W przyszlosci niech server dostaje wszystkie potrzebne rzeczy w inpucie
   ####################################################################
@@ -24,7 +19,6 @@ function(input, output) {
   output$PracaPlot <- renderPlot({
     df <- head(data[order(data[input$Kolumna], decreasing= T),], n = input$IloscZawodow)
     WartosciY <- df$Elementarne.grupy.zawodow
-    print(df)
     
     # Plot the bar chart.
     barplot(df[,input$Kolumna]#WartosciX
