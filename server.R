@@ -17,7 +17,7 @@ function(input, output) {
  # ss = input$inp
  # WartosciX <- df$Bezrobotni.dlugotrwale.na.koniec.okresu
   NazwaY<-"Bezrobotni dlugotrwale na koniec okresu"
-  NazwaX<-"Ilosc"
+  NazwaX<-"Ilość"
   #####################################################################
 
   # Fill in the spot we created for a plot
