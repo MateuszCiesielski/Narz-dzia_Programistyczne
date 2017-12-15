@@ -1,6 +1,7 @@
 
 data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
-NazwyKolumn=colnames(data)
+NazwyKolumn = colnames(subset(data,select = -c(1,2,18,19) ))
+print(NazwyKolumn)
 # Use a fluid Bootstrap layout
 fluidPage(
  # dashboardSiderbar(),
@@ -22,14 +23,13 @@ fluidPage(
                   choices=NazwyKolumn),
       hr(),##to tylko linia pozioma miedzy inputami
       #Selektuje ile wyswietlic top zawodow
-      ##Potem beda tryby, top N bezrobotnych lub wybrane zawody
       helpText("Czy wyswietlic top N zawodow w danej kategorii?"),
       checkboxInput("CzyPokazacTopN", "Wyswietl"),
       conditionalPanel(
         condition="input.CzyPokazacTopN == true",
         sliderInput("IloscZawodow","Wyswietl top N:",
                     min = 0, max = 10,
-                    value=5)
+                    value=0)
       ),
       helpText("Wybierz zawody dla ktorych chcesz wyswietlic stan"),
       selectizeInput(

@@ -5,29 +5,28 @@ library(datasets)
 function(input, output) {
   
   data <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
-  data2 <-read.csv(file="bezrobotni.csv",header=TRUE,sep=";",encoding="UTF-8")
+  data[,-c(1,18,19)]
   #####Tutaj ustawiaj zmienne dla wykresu
   ######W przyszlosci niech server dostaje wszystkie potrzebne rzeczy w inpucie
   ####################################################################
- # ss = input$inp
- # WartosciX <- df$Bezrobotni.dlugotrwale.na.koniec.okresu
-  NazwaY<-"Bezrobotni dlugotrwale na koniec okresu"
   NazwaX<-"Ilość"
   ZawodyDoWyboru <- data$Elementarne.grupy.zawodów
   #####################################################################
-
   # Fill in the spot we created for a plot
   output$PracaPlot <- renderPlot({
     TopN <- head(data[order(data[input$Kolumna], decreasing= T),], n = input$IloscZawodow)
     WybraneZawody <- input$WybraneZawody
     ziemniak <- subset(data, Elementarne.grupy.zawodów %in% WybraneZawody)
     DoWyswietlenia <- rbind(TopN,ziemniak)
-    WartosciY <- TopN$Elementarne.grupy.zawodow
-    
+    WartosciY <- DoWyswietlenia$Elementarne.grupy.zawodów
+    NazwaY <- input$Kolumna
     # Plot the bar chart.
     barplot(DoWyswietlenia[,input$Kolumna]#WartosciX
-            ,names.arg = WartosciY,xlab = NazwaX,ylab = NazwaY,col = "blue",
-            main = input$inp#"Na Na Na Bezrobocie"
+            ,legend.text=TRUE
+            ,args.legend=DoWyswietlenia[,input$Kolumna]
+            ,names.arg = WartosciY,las=3
+            ,xlab = NazwaX,ylab = NazwaY,col = "blue",
+            main = input$inp
             ,border = "red")
     
   })
