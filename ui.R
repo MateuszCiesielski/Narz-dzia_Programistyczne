@@ -4,7 +4,7 @@ fluidPage(theme="style.css",
  # dashboardSiderbar(),
   
   # Give the page a title
-  titlePanel("Costam costam praca i bezrobocie"),
+  titlePanel("Statystyki - oferty pracy i stan bezrobocia dla danych zawodów"),
   
   # Generate a row with a sidebar
   sidebarLayout(      
