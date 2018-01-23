@@ -1,26 +1,38 @@
-library(shinythemes)
-# Define UI for app that draws a histogram ----
-ui <- fluidPage(theme=shinytheme("superhero"),
-  # App title ----
-  titlePanel("Hello Shiny!"),
+
+# Use a fluid Bootstrap layout
+fluidPage(theme="style.css",
+ # dashboardSiderbar(),
   
-  # Sidebar layout with input and output definitions ----
-  sidebarLayout(
-    # Sidebar panel for inputs ----
+  # Give the page a title
+  titlePanel("Statystyki - oferty pracy i stan bezrobocia dla danych zawodów"),
+  
+  # Generate a row with a sidebar
+  sidebarLayout(      
+    # Define the sidebar with one input
     sidebarPanel(
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      fileInput("UploadedFile","Wybierz plik CSV"),
+      hr(),
+      ## Pierwszy argument to nazwa ""zmiennej"" do ktorej sie odwolamy w serverze
+      ## przez input$Kolumna
+      ##Druga wyswietla sie na ekranie, po prostu nazwa
+      ##Inputu nie mozesz pobierac tylko w funkcji "renderplot" 
+      ##lub innej funkcji reagujacej dynamicznie na zmiany(???)
+      uiOutput("DataColumn"),
+      uiOutput("Profession"),
+      hr(),##to tylko linia pozioma miedzy inputami
+      #Selektuje ile wyswietlic top zawodow
+      checkboxInput("ShowTopN", "Wyswietl top N zawodow w danej kategorii"),
+      conditionalPanel(
+        condition="input.ShowTopN == true",
+        sliderInput("ProfessionCounter","Wyswietl top N:",
+                    min = 0, max = 10,
+                    value=0)
+      ),
+      downloadButton('downloadPlot', 'Export Plot as PNG')
     ),
-    
-    # Main panel for displaying outputs ----
+    # Create a spot for the barplot
     mainPanel(
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
+      plotOutput("PracaPlot")
     )
   )
 )
-#+END_SRC
