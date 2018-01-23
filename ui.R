@@ -1,6 +1,6 @@
 
 # Use a fluid Bootstrap layout
-fluidPage(
+fluidPage(theme="style.css",
  # dashboardSiderbar(),
   
   # Give the page a title
