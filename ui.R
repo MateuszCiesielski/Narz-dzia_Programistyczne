@@ -10,9 +10,9 @@ fluidPage(
   sidebarLayout(      
     # Define the sidebar with one input
     sidebarPanel(
-      fileInput("file1","Wybierz plik CSV"),
+      fileInput("f","Wybierz plik CSV"),
       hr(),
-      
+      ##test
       ## Pierwszy argument to nazwa ""zmiennej"" do ktorej sie odwolamy w serverze
       ## przez input$Kolumna
       ##Druga wyswietla sie na ekranie, po prostu nazwa
