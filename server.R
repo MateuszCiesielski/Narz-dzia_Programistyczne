@@ -6,7 +6,9 @@ function(input, output) {
       {
         file <- input$UploadedFile
         data <- read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
-        ColumnNames <- colnames(subset(data,select = -c(1,2,18,19)))
+        data <- subset(data, select = -c(1,2,9,10,18,19))
+        colnames(data) <- c("Bezrobotni ogółem - napływ", "Bezrobotni ogółem - odpływ", "Bezrobotni ogółem - stan", "Bezrobotni długotrwale - stan", "Napływ ofert", "Napływ ofert - Internet", "Odsetek CBOP (%)", "Odsetek miejsc aktywizacji zawodowej (%)", "Liczba bezrobotnych miesięcznie", "Liczba ofert miesięcznie", "Wskaźnik dostępności ofert pracy", "Wskaźnik długotrwałego bezrobocia", "Wskaźnik płynności bezrobotnych", "Wskaźnik sumy bezrobotnych i ofert pracy")
+        ColumnNames <- colnames(data)
         selectInput("Column", "Wybierz kategorię:",
                     choices=ColumnNames)
       }
@@ -32,15 +34,15 @@ function(input, output) {
       {
         file <- input$UploadedFile
         data <- read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
-        data[,-c(1,18,19)] #wywalanie kolumn
-        
+        data <- subset(data, select = -c(1,9,10,18,19))
+        colnames(data) <- c("Zawody", "Bezrobotni ogółem - napływ", "Bezrobotni ogółem - odpływ", "Bezrobotni ogółem - stan", "Bezrobotni długotrwale - stan", "Napływ ofert", "Napływ ofert - Internet", "Odsetek CBOP (%)", "Odsetek miejsc aktywizacji zawodowej (%)", "Liczba bezrobotnych miesięcznie", "Liczba ofert miesięcznie", "Wskaźnik dostępności ofert pracy", "Wskaźnik długotrwałego bezrobocia", "Wskaźnik płynności bezrobotnych", "Wskaźnik sumy bezrobotnych i ofert pracy")
         TopN <- head(data[order(data[input$Column], decreasing= T),], n = input$ProfessionCounter)
         SelectedProfessions <- input$SelectedProfessions
-        ProfessionsSubset <- subset(data, Elementarne.grupy.zawodów %in% SelectedProfessions)
+        ProfessionsSubset <- subset(data, Zawody %in% SelectedProfessions)
         ToShow <- rbind(TopN, ProfessionsSubset)
-        YValues <- ToShow$Elementarne.grupy.zawodów
+        YValues <- ToShow$Zawody
         YLabel <- input$Column
-        XLabel<-"Ilość"
+        #XLabel<-"Ilość"
         
         if(!is.null(ProfessionsSubset)) #TODO
         {
@@ -48,7 +50,7 @@ function(input, output) {
                   ,legend.text=TRUE
                   ,args.legend=ToShow[,input$Column]
                   ,names.arg = YValues,las=3
-                  ,xlab = XLabel,ylab = YLabel,col = "blue",
+                  ,ylab = YLabel,col = "blue",
                   main = input$inp
                   ,border = "red")
         }
