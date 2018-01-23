@@ -28,7 +28,7 @@ function(input, output) {
     }
   })
   
-  output$PracaPlot <- renderPlot(
+  plotInput <- function()
     {
       if(!is.null(input$UploadedFile))
       {
@@ -55,5 +55,15 @@ function(input, output) {
                   ,border = "red")
         }
       }
-    })
+    }
+  
+  output$PracaPlot <- renderPlot({print(plotInput())})
+  
+  output$downloadPlot <- downloadHandler(
+    filename = "PracaPlot.png",
+    content = function(file) {
+      png(file)
+      plotInput()
+      dev.off()
+    })   
 }

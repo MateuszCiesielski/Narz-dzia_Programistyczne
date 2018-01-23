@@ -27,11 +27,12 @@ fluidPage(theme="style.css",
         sliderInput("ProfessionCounter","Wyswietl top N:",
                     min = 0, max = 10,
                     value=0)
-      )
+      ),
+      downloadButton('downloadPlot', 'Export Plot as PNG')
     ),
     # Create a spot for the barplot
     mainPanel(
-      plotOutput("PracaPlot")  
+      plotOutput("PracaPlot")
     )
   )
 )
