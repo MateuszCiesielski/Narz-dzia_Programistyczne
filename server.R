@@ -8,6 +8,7 @@ function(input, output) {
         data <- read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
         data <- subset(data, select = -c(1,2,9,10,18,19))
         colnames(data) <- c("Bezrobotni ogółem - napływ", "Bezrobotni ogółem - odpływ", "Bezrobotni ogółem - stan", "Bezrobotni długotrwale - stan", "Napływ ofert", "Napływ ofert - Internet", "Odsetek CBOP (%)", "Odsetek miejsc aktywizacji zawodowej (%)", "Liczba bezrobotnych miesięcznie", "Liczba ofert miesięcznie", "Wskaźnik dostępności ofert pracy", "Wskaźnik długotrwałego bezrobocia", "Wskaźnik płynności bezrobotnych", "Wskaźnik sumy bezrobotnych i ofert pracy")
+        #data["Napływ ofert pomniejszony o liczbę bezrobotnych"] <- rowSums(data[,c(5,7)])
         ColumnNames <- colnames(data)
         selectInput("Column", "Wybierz kategorię:",
                     choices=ColumnNames)
