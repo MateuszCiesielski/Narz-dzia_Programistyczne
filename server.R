@@ -44,7 +44,7 @@ function(input, output) {
         YLabel <- input$Column
         #XLabel<-"Ilość"
         
-        if(!is.null(ProfessionsSubset)) #TODO
+        if(length(SelectedProfessions) != 0 || input$ProfessionCounter != 0) #TODO
         {
           barplot(ToShow[,input$Column]#WartosciX
                   ,legend.text=TRUE
