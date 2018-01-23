@@ -4,10 +4,10 @@ function(input, output) {
     {
       if(!is.null(input$UploadedFile))
       {
-        file<-input$UploadedFile
-        data<-read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
-        NazwyKolumn<-colnames(subset(data,select = -c(1,2,18,19)))
-        selectInput("Column","Wybierz kategorię:",
+        file <- input$UploadedFile
+        data <- read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
+        ColumnNames <- colnames(subset(data,select = -c(1,2,18,19)))
+        selectInput("Column", "Wybierz kategorię:",
                     choices=ColumnNames)
       }
     })
@@ -15,47 +15,43 @@ function(input, output) {
   output$Profession <- renderUI({
     if(!is.null(input$UploadedFile))
     {
-      file<-input$UploadedFile
+      file <- input$UploadedFile
       data <- read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
       
       selectizeInput(
-      'WybraneZawody', 'Wybierz zawody dla ktorych chcesz wyswietlic stan:',
+      'SelectedProfessions', 'Wybierz zawody dla ktorych chcesz wyswietlic stan:',
       choices=data$Elementarne.grupy.zawodów,
       multiple = TRUE
       )
     }
   })
   
-  output$PracaPlot <- renderPlot({
-    
-    if(!is.null(input$UploadedFile))
+  output$PracaPlot <- renderPlot(
     {
-      
-    file <- input$UploadedFile
-    data <-read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
-    data[,-c(1,18,19)] #wywalanie kolumn
-    
-    TopN <- head(data[order(data[input$Kolumna], decreasing= T),], n = input$IloscZawodow)
-    WybraneZawody <- input$WybraneZawody
-    ziemniak <- subset(data, Elementarne.grupy.zawodów %in% WybraneZawody)
-    DoWyswietlenia <- rbind(TopN,ziemniak)
-    WartosciY <- DoWyswietlenia$Elementarne.grupy.zawodów
-    NazwaY <- input$Kolumna
-    NazwaX<-"Ilość"
-    
-    barplot(DoWyswietlenia[,input$Kolumna]#WartosciX
-              ,legend.text=TRUE
-              ,args.legend=DoWyswietlenia[,input$Kolumna]
-              ,names.arg = WartosciY,las=3
-              ,xlab = NazwaX,ylab = NazwaY,col = "blue",
-              main = input$inp
-              ,border = "red")
-    }
-    else
-    {
-      barplot.default()
-    }
-    
-    
-  })
+      if(!is.null(input$UploadedFile))
+      {
+        file <- input$UploadedFile
+        data <- read.csv(file$datapath,header=TRUE,sep=";",encoding="UTF-8",dec=",")
+        data[,-c(1,18,19)] #wywalanie kolumn
+        
+        TopN <- head(data[order(data[input$Column], decreasing= T),], n = input$ProfessionCounter)
+        SelectedProfessions <- input$SelectedProfessions
+        ProfessionsSubset <- subset(data, Elementarne.grupy.zawodów %in% SelectedProfessions)
+        ToShow <- rbind(TopN, ProfessionsSubset)
+        YValues <- ToShow$Elementarne.grupy.zawodów
+        YLabel <- input$Column
+        XLabel<-"Ilość"
+        
+        if(!is.null(ProfessionsSubset)) #TODO
+        {
+          barplot(ToShow[,input$Column]#WartosciX
+                  ,legend.text=TRUE
+                  ,args.legend=ToShow[,input$Column]
+                  ,names.arg = YValues,las=3
+                  ,xlab = XLabel,ylab = YLabel,col = "blue",
+                  main = input$inp
+                  ,border = "red")
+        }
+      }
+    })
 }

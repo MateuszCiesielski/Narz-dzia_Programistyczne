@@ -18,16 +18,13 @@ fluidPage(
       ##Inputu nie mozesz pobierac tylko w funkcji "renderplot" 
       ##lub innej funkcji reagujacej dynamicznie na zmiany(???)
       uiOutput("DataColumn"),
-      helpText("Wybierz zawody dla ktorych chcesz wyswietlic stan:"),
-      uiOutput("ProfessionLabel"),
       uiOutput("Profession"),
       hr(),##to tylko linia pozioma miedzy inputami
       #Selektuje ile wyswietlic top zawodow
-      helpText("Czy wyswietlic top N zawodow w danej kategorii?"),
-      checkboxInput("CzyPokazacTopN", "Wyswietl"),
+      checkboxInput("ShowTopN", "Wyswietl top N zawodow w danej kategorii"),
       conditionalPanel(
-        condition="input.CzyPokazacTopN == true",
-        sliderInput("IloscZawodow","Wyswietl top N:",
+        condition="input.ShowTopN == true",
+        sliderInput("ProfessionCounter","Wyswietl top N:",
                     min = 0, max = 10,
                     value=0)
       )
